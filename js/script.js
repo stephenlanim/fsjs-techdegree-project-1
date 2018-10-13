@@ -211,7 +211,7 @@ function printQuote() {
   insertIcon(selectedQuote);
 
   // Randomly change background color
-  const newBGC = changeBGColor()
+  const newBGC = changeBGColor();
   document.getElementsByTagName("BODY")[0].style.backgroundColor = newBGC;
   document.getElementById("loadQuote").style.backgroundColor = newBGC;
 
