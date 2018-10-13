@@ -82,30 +82,65 @@ function printQuote() {
   const quoteBox = document.getElementById("quote-box");
 
   // If quote citation and year are indicated...
+  if (selectedQuote.citation && selectedQuote.year) {
+    // Print quote and source with citation and year
+    quoteBox.innerHTML = `
+      <p class="quote">${selectedQuote.quote}</p>
+      <p class="source">${selectedQuote.source}<span class="citation">${selectedQuote.citation}</span><span class="year">${selectedQuote.year}</span></p>`;
+  }
 
-    // Print quote with citation
+  // Else...
+  else {
+    // Print quote and source without citation or year
+    quoteBox.innerHTML = `
+      <p class="quote">${selectedQuote.quote}</p>
+      <p class="source">${selectedQuote.source}</p>
+    `;
+  }
 
-  // Print quote
-
-  // Print quote source
-
-
-
-  // If quote year is indicated...
-
-    // Print year
-
+  // Randomly change background color
+  const newBGC = changeBGColor()
+  document.getElementsByTagName("BODY")[0].style.backgroundColor = newBGC;
+  document.getElementById("loadQuote").style.backgroundColor = newBGC;
 }
 
 // Background Colors
-const bgc1 = "#36b55c";
-const bgc2 = "#51ddfc";
-const bgc3 = "#e4757a";
-const bgc4 = "#fd7856";
-const bgc5 = "#927bc1";
+const greenish = "#108F36";
+const brightBlue = "#2BB7D6";
+const darkTeal = "#004463";
+const kindaNavy = "#0D2B4A";
+const deepRed = "#BE4F54";
+const brightOrange = "#D75230";
+const Purplish = "#6C559B";
+const darkPurple = "#1F084E";
+const slateGray = "#708090";
+const whatTheBadGuysWear = "#000";
+
+// Array of background colors
+const bgColors = [
+  greenish,
+  brightBlue,
+  darkTeal,
+  kindaNavy,
+  deepRed,
+  brightOrange,
+  Purplish,
+  darkPurple,
+  slateGray,
+  whatTheBadGuysWear
+];
 
 // Function to randomly change background color for each printed quote
+function changeBGColor() {
+  // Get the total number of background colors
+  const bgcQty = bgColors.length;
+  // Get a random number based on the number of background colors
+  const randomPosition = Math.floor(Math.random() * bgcQty);
+  // Select a random background color from the array
+  const randomColor = bgColors[randomPosition];
 
+  return randomColor;
+}
 
 // Function to change quote every _ seconds
 
