@@ -1,4 +1,9 @@
-// FSJS - Random Quote Generator
+// ============================================
+//   Random Quote Generator
+// ============================================
+
+// Get quote box for displaying quote on screen
+const quoteBox = document.getElementById("quote-box");
 
 // Quote Objects
 const quote1 = {
@@ -14,7 +19,7 @@ const quote2 = {
   source: "Benjamin Franklin",
   // citation: "",
   // year: ,
-  tags: ["education", "knowledge"]
+  tags: ["education", "wisdom"]
 };
 
 const quote3 = {
@@ -38,7 +43,7 @@ const quote5 = {
   source: "Aristotle",
   // citation: "",
   // year: ,
-  tags: ["philosophy"]
+  tags: ["wisdom"]
 };
 
 const quote6 = {
@@ -46,62 +51,67 @@ const quote6 = {
   source: "Isaac Asimov",
   // citation: "",
   // year: ,
-  tags: ["wisdom", "sociology"]
+  tags: ["wisdom", "society"]
 };
 
+const quote7 = {
+  quote: "The man who moves a mountain begins by carrying away small stones.",
+  source: "Confucius",
+  // citation: "",
+  // year: ,
+  tags: ["motivation", "wisdom"]
+};
+
+const quote8 = {
+  quote: "The only way of discovering the limits of the possible is to venture a little way past them into the impossible.",
+  source: "Arthur C. Clarke",
+  // citation: "",
+  // year: ,
+  tags: ["motivation", "innovation"]
+};
+
+const quote9 = {
+  quote: "You know you&rsquo;re in love when you can&rsquo;t fall asleep because reality is finally better than your dreams.",
+  source: "Dr. Seuss",
+  // citation: "",
+  // year: ,
+  tags: ["love"]
+};
+
+const quote10 = {
+  quote: "We accept the love we think we deserve.",
+  source: "Stephen Chbosky",
+  citation: "The Perks of Being a Wallflower",
+  year: 1999,
+  tags: ["love"]
+};
+
+
 // Create the array of quote objects and name it quotes
-const quote = [
+const quotes = [
   quote1,
   quote2,
   quote3,
   quote4,
   quote5,
-  quote6
+  quote6,
+  quote7,
+  quote8,
+  quote9,
+  quote10
 ];
 
 
 // Function to get a random quote from quote array
 function getRandomQuote() {
   // Get the total number of quotes
-  const quoteQty = quote.length;
+  const quoteQty = quotes.length;
   // Get a random number based on the number of quotes
   const randomPosition = Math.floor(Math.random() * quoteQty);
   // Select a random quote object from the quote array
-  const randomQuote = quote[randomPosition];
+  const randomQuote = quotes[randomPosition];
 
   return randomQuote;
-}
-
-
-// Create the printQuote funtion and name it printQuote
-// Function to print random quote out to the screen
-function printQuote() {
-  // Get random quote object
-  const selectedQuote = getRandomQuote();
-  // Get quote box for displaying quote on screen
-  const quoteBox = document.getElementById("quote-box");
-
-  // If quote citation and year are indicated...
-  if (selectedQuote.citation && selectedQuote.year) {
-    // Print quote and source with citation and year
-    quoteBox.innerHTML = `
-      <p class="quote">${selectedQuote.quote}</p>
-      <p class="source">${selectedQuote.source}<span class="citation">${selectedQuote.citation}</span><span class="year">${selectedQuote.year}</span></p>`;
-  }
-
-  // Else...
-  else {
-    // Print quote and source without citation or year
-    quoteBox.innerHTML = `
-      <p class="quote">${selectedQuote.quote}</p>
-      <p class="source">${selectedQuote.source}</p>
-    `;
-  }
-
-  // Randomly change background color
-  const newBGC = changeBGColor()
-  document.getElementsByTagName("BODY")[0].style.backgroundColor = newBGC;
-  document.getElementById("loadQuote").style.backgroundColor = newBGC;
 }
 
 // Background Colors
@@ -130,6 +140,7 @@ const bgColors = [
   whatTheBadGuysWear
 ];
 
+
 // Function to randomly change background color for each printed quote
 function changeBGColor() {
   // Get the total number of background colors
@@ -142,15 +153,76 @@ function changeBGColor() {
   return randomColor;
 }
 
-// Function to change quote every _ seconds
 
-  // After 20 seconds...
+// Function to insert icon based on quote tag
+function insertIcon(selectedQuote) {
+  if (selectedQuote.tags.includes("wisdom")) {
+    document.getElementsByClassName("source")[0].innerHTML += `<i class="fas fa-brain"></i>`;
+  }
+  if (selectedQuote.tags.includes("education")) {
+    document.getElementsByClassName("source")[0].innerHTML += `<i class="fas fa-graduation-cap"></i>`;
+  }
+  if (selectedQuote.tags.includes("motivation")) {
+    document.getElementsByClassName("source")[0].innerHTML += `<i class="fas fa-fist-raised"></i>`;
+  }
+  if (selectedQuote.tags.includes("society")) {
+    document.getElementsByClassName("source")[0].innerHTML += `<i class="fas fa-globe-americas"></i>`;
+  }
+  if (selectedQuote.tags.includes("love")) {
+    document.getElementsByClassName("source")[0].innerHTML += `<i class="fas fa-heart"></i>`;
+  }
 
-  // Activate printQuote()
+} // End of insertIcon()
+
+// Variable for storing changeQuoteByInterval's intervalID
+let quoteIntervalID;
+
+// Function to change quote every 10 seconds
+function changeQuoteByInterval() {
+ quoteIntervalID = setInterval(printQuote, 10000);
+}
+// Activate above function
+changeQuoteByInterval();
 
 
+// Function to print random quote out to the screen
+function printQuote() {
+  // Get random quote object
+  const selectedQuote = getRandomQuote();
 
+  // If quote citation and year are indicated...
+  if (selectedQuote.citation && selectedQuote.year) {
+    // Print quote and source with citation and year
+    quoteBox.innerHTML = `
+      <p class="quote">${selectedQuote.quote}</p>
+      <p class="source">${selectedQuote.source}<span class="citation">${selectedQuote.citation}</span><span class="year">${selectedQuote.year}</span></p>`;
+  }
 
-// This event listener will respond to "Show another quote" button clicks
-// when user clicks anywhere on the button, the "printQuote" function is called
-document.getElementById('loadQuote').addEventListener("click", printQuote, false);
+  // Otherwise...
+  else {
+    // Print quote and source without citation or year
+    quoteBox.innerHTML = `
+      <p class="quote">${selectedQuote.quote}</p>
+      <p class="source">${selectedQuote.source}</p>
+    `;
+  }
+
+  // Insert tag icon
+  insertIcon(selectedQuote);
+
+  // Randomly change background color
+  const newBGC = changeBGColor()
+  document.getElementsByTagName("BODY")[0].style.backgroundColor = newBGC;
+  document.getElementById("loadQuote").style.backgroundColor = newBGC;
+
+  // Cancel interval change so as not to interfere with reading new quote
+  clearInterval(quoteIntervalID);
+
+  // Reactivate interval change
+  changeQuoteByInterval();
+} // End of printQuote()
+
+// When user clicks "Show another quote" button...
+document.getElementById('loadQuote').addEventListener("click",
+  // Print new quote to the screen
+  printQuote, false);

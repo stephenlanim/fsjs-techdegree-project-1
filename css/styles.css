@@ -4,6 +4,7 @@ body {
   background-color: #36b55c;
   color: white;
   font-family: 'Playfair Display', serif;
+  transition: background-color 0.5s;
 }
 
 #quote-box {
@@ -88,6 +89,11 @@ body {
 
 #loadQuote:focus {
   outline: none;
+}
+
+i {
+  color: inherit;
+  margin-left: 0.5em;
 }
 
 @media (max-width: 420px) {
